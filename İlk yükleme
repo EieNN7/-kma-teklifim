@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benim Sevgilim Olur musun?</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f9e3e3;
+        font-family: 'Arial', sans-serif;
+        flex-direction: column;
+    }
+
+    .container {
+        text-align: center;
+        position: relative;
+    }
+
+    h1, .header_text {
+        font-size: 2.5em;
+        color: #d32f2f;
+    }
+
+    .header_text {
+        font-size: 3em;
+    }
+
+    .buttons {
+        margin-top: 20px;
+        position: relative;
+        height: 60px; /* Butonlar için sabit yükseklik */
+    }
+
+    .yes-button, .no-button {
+        font-size: 1.5em;
+        padding: 10px 20px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        position: absolute;
+        transition: all 0.3s ease;
+    }
+
+    .yes-button {
+        background-color: #4caf50;
+        left: 0;
+    }
+
+    .no-button {
+        background-color: #f44336;
+        left: 150px;
+    }
+
+    .gif_container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    .yes .gif_container img {
+        width: 100%; 
+        max-width: 500px; 
+        height: auto; 
+    }
+</style>
+</head>
+<body>
+<div class="container" id="mainContainer">
+    <h1>Benim Sevgilim Olur musun?</h1>
+    <div class="buttons">
+        <button class="yes-button" onclick="handleYesClick()">Evet</button>
+        <button class="no-button" id="noButton" onmouseover="moveNoButton()" onclick="handleNoClick()">Hayır</button>
+    </div>
+    <div class="gif_container">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Sevimli GIF">
+    </div>
+</div>
+
+<script>
+const mesajlar = [
+    "Emin misin?",
+    "Gerçekten emin misin??",
+    "Kesin mi? Son kararın mı?",
+    "Lütfen biraz düşün!",
+    "Beni üzme, lütfen 🙁",
+    "Çok üzülürüm...",
+    "Çok çok çok üzülürüm...",
+    "Tamam, artık sormayacağım...",
+    "Şaka yapıyorum, lütfen evet de! ❤️"
+];
+let mesajIndex = 0;
+
+// Hayır butonuna tıklayınca mesaj değişimi
+function handleNoClick() {
+    const noButton = document.getElementById('noButton');
+    const yesButton = document.querySelector('.yes-button');
+
+    // Mesaj değiştir
+    noButton.textContent = mesajlar[mesajIndex];
+
+    // Eğer son mesaj geldiyse Hayır butonunu kaldır
+    if (mesajIndex === mesajlar.length - 1) {
+        noButton.style.display = "none";
+        return;
+    }
+
+    mesajIndex = (mesajIndex + 1) % mesajlar.length;
+
+    // Evet butonunu büyüt
+    const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+    yesButton.style.fontSize = `${currentSize * 1.5}px`;
+}
+
+// Evet butonuna tıklayınca içeriği değiştir
+function handleYesClick() {
+    const container = document.getElementById('mainContainer');
+    container.innerHTML = `
+        <h1 class="header_text">Evet diyeceğini biliyordum, dünyalar benim oldu</h1>
+        <div class="gif_container">
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
+        </div>
+    `;
+    document.body.classList.add('yes');
+}
+
+// Hayır butonunu rastgele yatay taşıyan fonksiyon
+function moveNoButton() {
+    const noButton = document.getElementById('noButton');
+    const container = document.querySelector('.buttons');
+    const maxX = container.offsetWidth - noButton.offsetWidth;
+    const randX = Math.floor(Math.random() * maxX);
+    noButton.style.left = randX + "px";
+}
+</script>
+</body>
+</html>
